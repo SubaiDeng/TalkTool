@@ -1,0 +1,10 @@
+E:\code\C#\MiniTalk\Server\Server\bin\Debug\Server.exe.config
+E:\code\C#\MiniTalk\Server\Server\bin\Debug\Server.exe
+E:\code\C#\MiniTalk\Server\Server\bin\Debug\Server.pdb
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.OpenWindow.resources
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.Properties.Resources.resources
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.csproj.GenerateResource.Cache
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.exe
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.pdb
+E:\code\C#\MiniTalk\Server\Server\obj\Debug\Server.MainWindows.resources

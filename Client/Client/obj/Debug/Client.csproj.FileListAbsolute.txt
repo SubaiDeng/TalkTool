@@ -1,0 +1,12 @@
+E:\code\C#\MiniTalk\Client\Client\bin\Debug\Client.exe.config
+E:\code\C#\MiniTalk\Client\Client\bin\Debug\Client.exe
+E:\code\C#\MiniTalk\Client\Client\bin\Debug\Client.pdb
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.Login.resources
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.Properties.Resources.resources
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.exe
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.pdb
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.ListFrom.resources
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.ChatForm.resources
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.OnlineList.resources
