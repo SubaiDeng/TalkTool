@@ -38,7 +38,6 @@ namespace Server
             {
                 int n = server.connections;
                 ClientList.Add(new Client(server.server.AcceptTcpClient(),this));
-                ClientList[n].ListNum = n;
                 Thread newThread = new Thread(new ThreadStart(ClientList[n].Receive));
                 newThread.Start();
                 server.connections++;

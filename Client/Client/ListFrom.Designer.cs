@@ -33,6 +33,7 @@
             this.labAdr = new System.Windows.Forms.Label();
             this.buttonChat = new System.Windows.Forms.Button();
             this.listOnl = new System.Windows.Forms.ListBox();
+            this.richlist = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // buttonSearch
@@ -82,11 +83,21 @@
             this.listOnl.Size = new System.Drawing.Size(164, 412);
             this.listOnl.TabIndex = 4;
             // 
+            // richlist
+            // 
+            this.richlist.Location = new System.Drawing.Point(228, 59);
+            this.richlist.Name = "richlist";
+            this.richlist.ReadOnly = true;
+            this.richlist.Size = new System.Drawing.Size(235, 387);
+            this.richlist.TabIndex = 5;
+            this.richlist.Text = "";
+            // 
             // ListFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(188, 523);
+            this.ClientSize = new System.Drawing.Size(508, 523);
+            this.Controls.Add(this.richlist);
             this.Controls.Add(this.listOnl);
             this.Controls.Add(this.buttonChat);
             this.Controls.Add(this.labAdr);
@@ -108,5 +119,6 @@
         private System.Windows.Forms.Label labAdr;
         private System.Windows.Forms.Button buttonChat;
         public System.Windows.Forms.ListBox listOnl;
+        public System.Windows.Forms.RichTextBox richlist;
     }
 }

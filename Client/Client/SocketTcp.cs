@@ -19,6 +19,7 @@ namespace Client
         public TcpClient clientTcp;
         public NetworkStream stream;
         public OnlineList fatherWind;
+        public ListFrom listFrom;
         public ChatForm chatForm;
 
         public SocketTcp(string Name, string Adr, int ComNum )
@@ -101,24 +102,49 @@ namespace Client
         public void ReceiveChatNum(string rec)
         {
             rec = rec.Substring(3, rec.Length - 3);
-            chatForm.chatNum = int.Parse(rec);
-            chatForm.labChatNum.Text = rec;
+            string[] strArry;
+            strArry = rec.Split('/');
+            string aimStr = strArry[0];
+            int aimNum = int.Parse(strArry[1]);
+            ChatForm aimChat = null;
+            foreach(var temp in listFrom.chatList)
+            {
+                if (temp.chat.aim == aimStr)
+                    aimChat = temp;
+            }
+            aimChat.aimNum = aimNum;
+            //chatForm.labAimNum.Text = chatForm.aimNum.ToString();    
+            chatForm.labAimNum.Text = aimNum.ToString();
         }
 
-        public void SendChat(string msg)
+        public void SendChat(string msg,ChatForm chatf)
         {
             string sendStr = "---";
-            sendStr += chatForm.chatNum.ToString();
-            sendStr += "/";
+            sendStr += chatf.aimNum.ToString();        
+            sendStr += "/";            
             sendStr += msg;
             Send(sendStr, stream);
-
         }
 
         public void ReceiveChatMsg(string str)
         {
+            string num ;
+            string [] strArray;
+            string rec;
             str = str.Substring(3, str.Length - 3);
-            chatForm.ricTexReceive.Text += str+"\n";
+            strArray = str.Split('/');
+            num = strArray[0];
+            rec = strArray[1];
+            listFrom.richlist.Text += str+"\n";
+            ChatForm aimForm = null ;
+            foreach (var temp in listFrom.chatList)
+            {
+                if(temp.chat.aim == num )
+                {
+                    aimForm = temp;
+                }
+            }
+            aimForm.ricTexReceive.Text += rec+"\n";
         }
 
     }

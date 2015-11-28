@@ -30,6 +30,7 @@
         {
             this.listBoxClient = new System.Windows.Forms.ListBox();
             this.labAdr = new System.Windows.Forms.Label();
+            this.richList = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // listBoxClient
@@ -50,11 +51,21 @@
             this.labAdr.TabIndex = 1;
             this.labAdr.Text = "服务器地址";
             // 
+            // richList
+            // 
+            this.richList.Location = new System.Drawing.Point(258, 63);
+            this.richList.Name = "richList";
+            this.richList.ReadOnly = true;
+            this.richList.Size = new System.Drawing.Size(186, 244);
+            this.richList.TabIndex = 2;
+            this.richList.Text = "";
+            // 
             // MainWindows
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 345);
+            this.Controls.Add(this.richList);
             this.Controls.Add(this.labAdr);
             this.Controls.Add(this.listBoxClient);
             this.Name = "MainWindows";
@@ -70,6 +81,7 @@
 
         public System.Windows.Forms.ListBox listBoxClient;
         private System.Windows.Forms.Label labAdr;
+        public System.Windows.Forms.RichTextBox richList;
 
     }
 }

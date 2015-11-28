@@ -16,6 +16,7 @@ namespace Client
     public partial class ListFrom : Form
     {
 
+        public List<ChatForm> chatList; 
         public SocketTcp client;
         public ListFrom()
         {
@@ -29,6 +30,7 @@ namespace Client
             client.SendName();
             Thread ListenThread = new Thread(new ThreadStart(client.Receive));
             ListenThread.Start();
+            chatList = new List<ChatForm>();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -44,6 +46,9 @@ namespace Client
         {
             string aim = listOnl.SelectedItem.ToString();
             ChatForm chatForm = new ChatForm();
+            chatForm.fatherWind = this;
+            client.listFrom = this;
+            chatList.Add(chatForm);
             chatForm.chat.startIP = client;
             chatForm.chat.aim = aim;
             chatForm.Show();

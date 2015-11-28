@@ -13,8 +13,10 @@ namespace Client
     public partial class ChatForm : Form
     {
         public Chat chat = new Chat();
-        public int chatNum;
+        public int aimNum;
         public string SendBuff;
+        public ListFrom fatherWind;
+
         public ChatForm()
         {
             InitializeComponent();
@@ -24,6 +26,8 @@ namespace Client
         {
             chat.startIP.ChatConnect(chat.aim);
             chat.startIP.chatForm = this;
+            labAimAdr.Text = chat.aim;
+            labMyAdr.Text = chat.startIP.name;
         }
 
         private void buttonChatSend_Click(object sender, EventArgs e)
@@ -33,7 +37,7 @@ namespace Client
             SendBuff = front + SendBuff + "\n";
             ricTexSend.Clear();
             ricTexReceive.Text += SendBuff;
-            chat.startIP.SendChat(SendBuff);
+            chat.startIP.SendChat(SendBuff,this);
         }
     }
 }

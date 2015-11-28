@@ -18,11 +18,10 @@ namespace Server
         public TcpClient client;
         public string clientAdr;
         public string Name;
-        public int ListNum;
         public MainWindows fatherWind;
         public bool enable = true;
         public string NameAdr;
-        public List<string> aimList = new List<string>();
+        //public List<string> aimList = new List<string>();
         
         
         public Client ( TcpClient c,MainWindows win)
@@ -56,6 +55,7 @@ namespace Server
                         ReceiveStr = ReceiveStr.Substring(3, length -3 );
                         NameAdr = ReceiveStr + "  ：" + clientAdr;
                         fatherWind.AddClientList(NameAdr);
+                        fatherWind.richList.Text += NameAdr + "\n";
                     }                    
                     //判断是否为搜索局域网在线用户
                     if(ReceiveStr.StartsWith("++-"))
@@ -104,12 +104,21 @@ namespace Server
         public void BuildChat(string rec)
         {
             rec = rec.Substring(3, rec.Length - 3);
-            aimList.Add(rec);
+            /*aimList.Add(rec);
             int index = 0;
             foreach(string temp in aimList )
             {
                 if (temp == rec)
                     Send("+--" + index.ToString(), stream);
+                index++;
+            }*/
+            int index = 0;
+            foreach(var temp in fatherWind.ClientList)
+            {
+                if(temp.NameAdr == rec)
+                {
+                    Send("+--" +rec+"/"+index.ToString(), stream);
+                }
                 index++;
             }
         }
@@ -120,19 +129,13 @@ namespace Server
             int chatNum;
             string[] StrArray;
             string sendBuff;
-            string aim;
             Client connectAim = null;
             StrArray = str.Split('/');
             chatNum = int.Parse(StrArray[0]);
             sendBuff = StrArray[1];
-            aim = aimList[chatNum];
-            
-            foreach(var temp in fatherWind.ClientList)
-            {
-                if (aim == temp.NameAdr)
-                    connectAim = temp;
-            }
-            Send("---"+sendBuff,connectAim.stream);
+            connectAim = fatherWind.ClientList[chatNum];
+            fatherWind.richList.Text += "To" + chatNum.ToString() + "\n";
+            Send("---" +  NameAdr + "/" + sendBuff, connectAim.stream);
 
         }
     }
