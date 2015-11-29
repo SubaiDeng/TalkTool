@@ -60,6 +60,10 @@ namespace Client
                     {
                         ReceiveChatMsg(ReceiveStr);
                     }
+                    if(ReceiveStr.StartsWith("-++"))
+                    {
+                        ReceiveOpen(ReceiveStr);
+                    }
 
                 }
             }
@@ -97,6 +101,7 @@ namespace Client
         {
             
             SocketTcp.Send("+--"+aim, stream);
+            //listFrom.richlist.Text += aim + "\n";
             
         }
         public void ReceiveChatNum(string rec)
@@ -113,8 +118,9 @@ namespace Client
                     aimChat = temp;
             }
             aimChat.aimNum = aimNum;
-            //chatForm.labAimNum.Text = chatForm.aimNum.ToString();    
+            //chatForm.labAimNum.Text = chatForm.aimNum.ToString();   
             chatForm.labAimNum.Text = aimNum.ToString();
+            //MessageBox.Show(rec, "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);    
         }
 
         public void SendChat(string msg,ChatForm chatf)
@@ -128,23 +134,75 @@ namespace Client
 
         public void ReceiveChatMsg(string str)
         {
-            string num ;
+            string aim ;
             string [] strArray;
             string rec;
             str = str.Substring(3, str.Length - 3);
             strArray = str.Split('/');
-            num = strArray[0];
+            aim = strArray[0];
             rec = strArray[1];
-            listFrom.richlist.Text += str+"\n";
+
             ChatForm aimForm = null ;
             foreach (var temp in listFrom.chatList)
             {
-                if(temp.chat.aim == num )
+                if (temp.chat.aim == aim)
                 {
                     aimForm = temp;
                 }
             }
-            aimForm.ricTexReceive.Text += rec+"\n";
+            if(aimForm == null)
+            {
+                int n =0;
+                int ans = -1 ;
+                foreach(var temp in listFrom.listOnl.Items)
+                {
+                    if (temp.ToString() == aim || temp.ToString() == aim + "*")
+                        ans = n;
+                    n++;
+                }
+
+                if(ans == -1)
+                {
+                    listFrom.richlist.Text += rec + "\n";     
+                }
+                else
+                {
+                    listFrom.listOnl.Items[ans] = aim + "*";
+                    listFrom.Addbuff += rec + "\n";
+                }            
+            }
+            else
+            {
+                    aimForm.ricTexReceive.Text += rec + "\n";
+                    //让文本框获取焦点 
+                    aimForm.ricTexReceive.Focus();
+                    //设置光标的位置到文本尾 
+                    aimForm.ricTexReceive.Select(aimForm.ricTexReceive.TextLength, 0);
+                    //滚动到控件光标处 
+                    aimForm.ricTexReceive.ScrollToCaret();
+                    aimForm.ricTexSend.Focus();
+            }
+        }
+
+        public void SendStop()
+        {
+            Send("+-+",stream);
+        }
+        public void SendOpen(string str)
+        {
+            Send("-++" + str, stream);
+        }
+        public void ReceiveOpen(string str)
+        {
+            str = str.Substring(3, str.Length - 3);
+            listFrom.richTexOpen.Text += str+"\n";
+            //让文本框获取焦点 
+            listFrom.richTexOpen.Focus();
+            //设置光标的位置到文本尾 
+            listFrom.richTexOpen.Select(listFrom.richTexOpen.TextLength, 0);
+            //滚动到控件光标处 
+            listFrom.richTexOpen.ScrollToCaret();
+            listFrom.richTexSendOpen.Focus();
         }
 
     }

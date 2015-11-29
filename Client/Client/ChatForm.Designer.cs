@@ -52,6 +52,7 @@
             this.ricTexSend.Size = new System.Drawing.Size(397, 114);
             this.ricTexSend.TabIndex = 1;
             this.ricTexSend.Text = "";
+            this.ricTexSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ricTexSend_KeyPress);
             // 
             // buttonChatSend
             // 
@@ -103,6 +104,7 @@
             this.Controls.Add(this.ricTexReceive);
             this.Name = "ChatForm";
             this.Text = "ChatForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChatForm_FormClosed);
             this.Load += new System.EventHandler(this.ChatForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -112,7 +114,7 @@
         #endregion
 
         public System.Windows.Forms.RichTextBox ricTexReceive;
-        private System.Windows.Forms.RichTextBox ricTexSend;
+        public System.Windows.Forms.RichTextBox ricTexSend;
         private System.Windows.Forms.Button buttonChatSend;
         private System.Windows.Forms.Label labMyAdr;
         private System.Windows.Forms.Label labAimAdr;

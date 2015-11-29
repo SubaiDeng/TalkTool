@@ -16,6 +16,7 @@ namespace Client
         public int aimNum;
         public string SendBuff;
         public ListFrom fatherWind;
+        public bool open;
 
         public ChatForm()
         {
@@ -28,16 +29,38 @@ namespace Client
             chat.startIP.chatForm = this;
             labAimAdr.Text = chat.aim;
             labMyAdr.Text = chat.startIP.name;
+            open = true;
         }
 
         private void buttonChatSend_Click(object sender, EventArgs e)
         {
             string front = chat.startIP.name + "\t"+ DateTime.Now.ToShortTimeString()+"\n";
-            SendBuff = ricTexSend.Text;
+            SendBuff = ricTexSend.Text.TrimEnd();
             SendBuff = front + SendBuff + "\n";
             ricTexSend.Clear();
             ricTexReceive.Text += SendBuff;
+            //让文本框获取焦点 
+            ricTexReceive.Focus();
+            //设置光标的位置到文本尾 
+            ricTexReceive.Select(ricTexReceive.TextLength, 0);
+            //滚动到控件光标处 
+            ricTexReceive.ScrollToCaret();
+            ricTexSend.Focus();
             chat.startIP.SendChat(SendBuff,this);
+        }
+
+        private void ChatForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            open = false;
+            fatherWind.chatList.Remove(this);
+        }
+
+        private void ricTexSend_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((Keys)e.KeyChar == Keys.Enter)
+            {
+                buttonChatSend_Click(this, e);
+            }
         }
     }
 }

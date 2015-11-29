@@ -33,7 +33,7 @@ namespace Client
                 if (str.ToString() == temp)
                     flag = false;
             }
-            if(flag == true)
+            if (flag == true && listBoxName.SelectedItem.ToString() != "")
             {
                 fatherWind.listOnl.Items.Add(listBoxName.SelectedItem.ToString());
             }
@@ -45,17 +45,18 @@ namespace Client
 
         private void buttonAddAll_Click(object sender, EventArgs e)
         {
-            foreach (string str in listBoxName.Items)
+            foreach (var str in listBoxName.Items)
             {
                 bool flag = true;
-                foreach (string temp in fatherWind.listOnl.Items)
+                foreach (var temp in fatherWind.listOnl.Items)
                 {
-                    if (str == temp)
+                    if (str.ToString() == temp.ToString())
                         flag = false;
                 }
-                if(flag == true)
+                if(flag == true && str.ToString() != "")
                     fatherWind.listOnl.Items.Add(str);
             }
+            this.Close();
 
         }
     }

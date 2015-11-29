@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(469, 345);
+            this.ClientSize = new System.Drawing.Size(470, 345);
             this.Controls.Add(this.richList);
             this.Controls.Add(this.labAdr);
             this.Controls.Add(this.listBoxClient);

@@ -34,11 +34,17 @@
             this.buttonChat = new System.Windows.Forms.Button();
             this.listOnl = new System.Windows.Forms.ListBox();
             this.richlist = new System.Windows.Forms.RichTextBox();
+            this.labStanger = new System.Windows.Forms.Label();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.richTexOpen = new System.Windows.Forms.RichTextBox();
+            this.labelOpen = new System.Windows.Forms.Label();
+            this.richTexSendOpen = new System.Windows.Forms.RichTextBox();
+            this.buttonSendOpen = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonSearch
             // 
-            this.buttonSearch.Location = new System.Drawing.Point(96, 488);
+            this.buttonSearch.Location = new System.Drawing.Point(96, 462);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(80, 23);
             this.buttonSearch.TabIndex = 0;
@@ -66,7 +72,7 @@
             // 
             // buttonChat
             // 
-            this.buttonChat.Location = new System.Drawing.Point(12, 488);
+            this.buttonChat.Location = new System.Drawing.Point(12, 462);
             this.buttonChat.Name = "buttonChat";
             this.buttonChat.Size = new System.Drawing.Size(75, 23);
             this.buttonChat.TabIndex = 3;
@@ -80,23 +86,86 @@
             this.listOnl.ItemHeight = 12;
             this.listOnl.Location = new System.Drawing.Point(12, 59);
             this.listOnl.Name = "listOnl";
-            this.listOnl.Size = new System.Drawing.Size(164, 412);
+            this.listOnl.Size = new System.Drawing.Size(164, 388);
             this.listOnl.TabIndex = 4;
+            this.listOnl.DoubleClick += new System.EventHandler(this.listOnl_DoubleClick);
             // 
             // richlist
             // 
             this.richlist.Location = new System.Drawing.Point(228, 59);
             this.richlist.Name = "richlist";
             this.richlist.ReadOnly = true;
-            this.richlist.Size = new System.Drawing.Size(235, 387);
+            this.richlist.Size = new System.Drawing.Size(203, 387);
             this.richlist.TabIndex = 5;
             this.richlist.Text = "";
+            // 
+            // labStanger
+            // 
+            this.labStanger.AutoSize = true;
+            this.labStanger.Location = new System.Drawing.Point(226, 44);
+            this.labStanger.Name = "labStanger";
+            this.labStanger.Size = new System.Drawing.Size(53, 12);
+            this.labStanger.TabIndex = 6;
+            this.labStanger.Text = "陌生人：";
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Location = new System.Drawing.Point(185, 462);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
+            this.buttonDelete.TabIndex = 7;
+            this.buttonDelete.Text = "删除好友";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // richTexOpen
+            // 
+            this.richTexOpen.Location = new System.Drawing.Point(446, 59);
+            this.richTexOpen.Name = "richTexOpen";
+            this.richTexOpen.ReadOnly = true;
+            this.richTexOpen.Size = new System.Drawing.Size(203, 235);
+            this.richTexOpen.TabIndex = 8;
+            this.richTexOpen.Text = "";
+            // 
+            // labelOpen
+            // 
+            this.labelOpen.AutoSize = true;
+            this.labelOpen.Location = new System.Drawing.Point(444, 44);
+            this.labelOpen.Name = "labelOpen";
+            this.labelOpen.Size = new System.Drawing.Size(77, 12);
+            this.labelOpen.TabIndex = 9;
+            this.labelOpen.Text = "公共聊天室：";
+            // 
+            // richTexSendOpen
+            // 
+            this.richTexSendOpen.Location = new System.Drawing.Point(446, 300);
+            this.richTexSendOpen.Name = "richTexSendOpen";
+            this.richTexSendOpen.Size = new System.Drawing.Size(203, 146);
+            this.richTexSendOpen.TabIndex = 10;
+            this.richTexSendOpen.Text = "";
+            this.richTexSendOpen.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTexSendOpen_KeyPress);
+            // 
+            // buttonSendOpen
+            // 
+            this.buttonSendOpen.Location = new System.Drawing.Point(574, 462);
+            this.buttonSendOpen.Name = "buttonSendOpen";
+            this.buttonSendOpen.Size = new System.Drawing.Size(75, 23);
+            this.buttonSendOpen.TabIndex = 11;
+            this.buttonSendOpen.Text = "发送";
+            this.buttonSendOpen.UseVisualStyleBackColor = true;
+            this.buttonSendOpen.Click += new System.EventHandler(this.buttonSendOpen_Click);
             // 
             // ListFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 523);
+            this.ClientSize = new System.Drawing.Size(679, 501);
+            this.Controls.Add(this.buttonSendOpen);
+            this.Controls.Add(this.richTexSendOpen);
+            this.Controls.Add(this.labelOpen);
+            this.Controls.Add(this.richTexOpen);
+            this.Controls.Add(this.buttonDelete);
+            this.Controls.Add(this.labStanger);
             this.Controls.Add(this.richlist);
             this.Controls.Add(this.listOnl);
             this.Controls.Add(this.buttonChat);
@@ -106,6 +175,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ListFrom";
             this.Text = "ListFrom";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListFrom_FormClosing);
             this.Load += new System.EventHandler(this.ListFrom_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -120,5 +190,11 @@
         private System.Windows.Forms.Button buttonChat;
         public System.Windows.Forms.ListBox listOnl;
         public System.Windows.Forms.RichTextBox richlist;
+        private System.Windows.Forms.Label labStanger;
+        private System.Windows.Forms.Button buttonDelete;
+        public System.Windows.Forms.RichTextBox richTexOpen;
+        private System.Windows.Forms.Label labelOpen;
+        public System.Windows.Forms.RichTextBox richTexSendOpen;
+        private System.Windows.Forms.Button buttonSendOpen;
     }
 }

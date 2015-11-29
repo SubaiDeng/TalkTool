@@ -18,6 +18,7 @@ namespace Client
 
         public List<ChatForm> chatList; 
         public SocketTcp client;
+        public string Addbuff;
         public ListFrom()
         {
             InitializeComponent();            
@@ -25,11 +26,13 @@ namespace Client
 
         private void ListFrom_Load(object sender, EventArgs e)
         {
+            Control.CheckForIllegalCrossThreadCalls = false;
             labName.Text += client.name;
             labAdr.Text += client.adr;
             client.SendName();
             Thread ListenThread = new Thread(new ThreadStart(client.Receive));
             ListenThread.Start();
+            client.listFrom = this;
             chatList = new List<ChatForm>();
         }
 
@@ -42,16 +45,94 @@ namespace Client
             client.fatherWind = onlineList;
         }
 
-        private void buttonChat_Click(object sender, EventArgs e)
+        public void buttonChat_Click(object sender, EventArgs e)
         {
-            string aim = listOnl.SelectedItem.ToString();
-            ChatForm chatForm = new ChatForm();
-            chatForm.fatherWind = this;
-            client.listFrom = this;
-            chatList.Add(chatForm);
-            chatForm.chat.startIP = client;
-            chatForm.chat.aim = aim;
-            chatForm.Show();
+            try
+            {
+                bool flag = false;
+                bool exsit = false;
+                string aim = listOnl.SelectedItem.ToString();
+                ChatForm chatForm = null;
+
+                if (aim.EndsWith("*"))
+                {
+                    flag = true;
+                    //chatForm.ricTexReceive.Text += Addbuff + "\n";
+                    aim = aim.Substring(0, aim.Length - 1);
+                    listOnl.Items[listOnl.Items.IndexOf(listOnl.SelectedItem)] = aim;
+                    
+                }
+                foreach(var temp in chatList)
+                {
+                    if(temp.chat.aim == aim)
+                    {
+                            MessageBox.Show("对话框已存在", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                            exsit = true;
+                    }                        
+                }
+                if(exsit == false)
+                {
+                    chatForm = new ChatForm();
+                    chatForm.fatherWind = this;
+                    chatList.Add(chatForm);
+                    chatForm.chat.startIP = client;
+                    chatForm.chat.aim = aim;
+                    chatForm.Show();
+                }
+                if(flag == true)
+                {
+                    /*
+                    foreach (var temp in listOnl.Items)
+                    {
+                        if (temp.ToString() == aim)
+                            ans = n;
+                        n++;
+                    }
+                    listOnl.Items[ans] = aim;
+                     */
+                    chatForm.ricTexReceive.Text += Addbuff;
+                    Addbuff = "";
+                }
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("请选择聊天对象", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            }
         }
+
+        private void listOnl_DoubleClick(object sender, EventArgs e)
+        {
+            buttonChat_Click(this, e);
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            listOnl.Items.Remove(listOnl.SelectedItem);
+        }
+
+        private void ListFrom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            client.SendStop();
+            client.stream.Close();
+            MessageBox.Show("谢谢使用", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            client.clientTcp.Close();
+            Application.Exit();
+        }
+
+        private void buttonSendOpen_Click(object sender, EventArgs e)
+        {
+            string sendbuff = client.name+DateTime.Now.ToShortTimeString()+"\n"+richTexSendOpen.Text.TrimEnd() + "\n";
+            client.SendOpen(sendbuff);
+            richTexSendOpen.Clear();
+        }
+
+        private void richTexSendOpen_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((Keys)e.KeyChar == Keys.Enter)
+            {
+                buttonSendOpen_Click(this, e);
+            }
+        }
+
     }
 }

@@ -74,6 +74,15 @@ namespace Server
                     {
                         SendChat(ReceiveStr);
                     }
+                    //用户下线
+                    if(ReceiveStr.StartsWith("+-+"))
+                    {
+                        enable = false;
+                    }
+                    if(ReceiveStr.StartsWith("-++"))
+                    {
+                        SendOpen(ReceiveStr);
+                    }
                 }
             }
         }
@@ -135,8 +144,16 @@ namespace Server
             sendBuff = StrArray[1];
             connectAim = fatherWind.ClientList[chatNum];
             fatherWind.richList.Text += "To" + chatNum.ToString() + "\n";
-            Send("---" +  NameAdr + "/" + sendBuff, connectAim.stream);
+            Send("---" +  NameAdr + "/" +sendBuff, connectAim.stream);
 
+        }
+        public void SendOpen(string str)
+        {
+            str = str.Substring(3,str.Length-3);
+            foreach(var temp in fatherWind.ClientList)
+            {
+                Send("-++" + str,temp.stream);
+            }
         }
     }
     
