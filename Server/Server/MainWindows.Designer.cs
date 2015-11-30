@@ -71,6 +71,7 @@
             this.Name = "MainWindows";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainWindows";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindows_FormClosing);
             this.Load += new System.EventHandler(this.MainWindows_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

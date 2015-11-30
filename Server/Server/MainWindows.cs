@@ -17,6 +17,7 @@ namespace Server
     {
         public SocketTcp server;
         public List<Client> ClientList;
+        public Thread countClientThread;
         public MainWindows()
         {
             InitializeComponent();
@@ -26,7 +27,7 @@ namespace Server
         {
             //跨线程调用Windows控件。
             Control.CheckForIllegalCrossThreadCalls = false;
-            Thread countClientThread = new Thread(new ThreadStart(this.Wait));
+            countClientThread = new Thread(new ThreadStart(this.Wait));
             ClientList = new List<Client>();
             countClientThread.Start();
             labAdr.Text = "IP: "+server.adr;
@@ -37,9 +38,10 @@ namespace Server
             while(true)
             {
                 int n = server.connections;
-                ClientList.Add(new Client(server.server.AcceptTcpClient(),this));
-                Thread newThread = new Thread(new ThreadStart(ClientList[n].Receive));
-                newThread.Start();
+                Client temp = new Client(server.server.AcceptTcpClient(), this);
+                ClientList.Add(temp);
+                temp.listenThread  = new Thread(new ThreadStart(ClientList[n].Receive));
+                temp.listenThread.Start();
                 server.connections++;
             }
         }
@@ -47,6 +49,21 @@ namespace Server
         public void AddClientList(string str)
         {
             listBoxClient.Items.Add(str);
+        }
+
+        private void MainWindows_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = false;
+            foreach(var temp in ClientList)
+            {
+                temp.SendEnd();
+                temp.listenThread.Abort();
+                temp.client.Close();
+            }
+            
+            server.server.Stop();
+            countClientThread.Abort();
+
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Client;
+using System.IO;
 
 namespace Client
 {
@@ -63,6 +64,10 @@ namespace Client
                     if(ReceiveStr.StartsWith("-++"))
                     {
                         ReceiveOpen(ReceiveStr);
+                    }
+                    if(ReceiveStr.StartsWith("-+-"))
+                    {
+                        ReceiveEnd();
                     }
 
                 }
@@ -174,6 +179,7 @@ namespace Client
             else
             {
                     aimForm.ricTexReceive.Text += rec + "\n";
+                    SocketTcp.SaveLog(name, aimForm.chat.aim, rec);
                     //让文本框获取焦点 
                     aimForm.ricTexReceive.Focus();
                     //设置光标的位置到文本尾 
@@ -196,6 +202,7 @@ namespace Client
         {
             str = str.Substring(3, str.Length - 3);
             listFrom.richTexOpen.Text += str+"\n";
+            SaveLog(name,"公共聊天",str);
             //让文本框获取焦点 
             listFrom.richTexOpen.Focus();
             //设置光标的位置到文本尾 
@@ -205,5 +212,21 @@ namespace Client
             listFrom.richTexSendOpen.Focus();
         }
 
+
+        public static void SaveLog(string ClientName,string ChatName,string str)
+        {
+            string fileName = "./" + ClientName + "/" + ChatName+".txt";
+
+            StreamWriter sr = new StreamWriter(fileName,true,Encoding.BigEndianUnicode);
+            sr.WriteLine(str.TrimEnd());
+            sr.Close();
+
+        }
+
+        public void ReceiveEnd()
+        {
+            MessageBox.Show("服务器已下线", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            listFrom.Close();
+        }
     }
 }

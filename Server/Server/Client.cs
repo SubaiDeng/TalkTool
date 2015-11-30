@@ -21,6 +21,7 @@ namespace Server
         public MainWindows fatherWind;
         public bool enable = true;
         public string NameAdr;
+        public Thread listenThread;
         //public List<string> aimList = new List<string>();
         
         
@@ -155,6 +156,12 @@ namespace Server
                 Send("-++" + str,temp.stream);
             }
         }
+
+        public void SendEnd()
+        {
+            Send("-+-", stream);
+        }
+        
     }
     
 }

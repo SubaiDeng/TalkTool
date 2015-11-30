@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using System.IO;
+
 
 namespace Client
 {
@@ -19,6 +21,7 @@ namespace Client
         public List<ChatForm> chatList; 
         public SocketTcp client;
         public string Addbuff;
+        public Thread ListenThread;
         public ListFrom()
         {
             InitializeComponent();            
@@ -30,10 +33,13 @@ namespace Client
             labName.Text += client.name;
             labAdr.Text += client.adr;
             client.SendName();
-            Thread ListenThread = new Thread(new ThreadStart(client.Receive));
+            ListenThread = new Thread(new ThreadStart(client.Receive));
             ListenThread.Start();
             client.listFrom = this;
             chatList = new List<ChatForm>();
+
+            if (Directory.Exists("./" + client.name) == false)
+                Directory.CreateDirectory("./" + client.name);
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -91,6 +97,7 @@ namespace Client
                     listOnl.Items[ans] = aim;
                      */
                     chatForm.ricTexReceive.Text += Addbuff;
+                    SocketTcp.SaveLog(client.name, aim, Addbuff);
                     Addbuff = "";
                 }
             }
@@ -110,14 +117,7 @@ namespace Client
             listOnl.Items.Remove(listOnl.SelectedItem);
         }
 
-        private void ListFrom_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            client.SendStop();
-            client.stream.Close();
-            MessageBox.Show("谢谢使用", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-            client.clientTcp.Close();
-            Application.Exit();
-        }
+        
 
         private void buttonSendOpen_Click(object sender, EventArgs e)
         {
@@ -132,6 +132,15 @@ namespace Client
             {
                 buttonSendOpen_Click(this, e);
             }
+        }
+        private void ListFrom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = false ;            
+            client.SendStop();
+            ListenThread.Abort();
+            client.stream.Close();
+            //MessageBox.Show("谢谢使用", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            client.clientTcp.Close();
         }
 
     }

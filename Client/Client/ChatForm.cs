@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Client
 {
@@ -39,6 +40,7 @@ namespace Client
             SendBuff = front + SendBuff + "\n";
             ricTexSend.Clear();
             ricTexReceive.Text += SendBuff;
+            SocketTcp.SaveLog(chat.startIP.name, chat.aim, SendBuff);
             //让文本框获取焦点 
             ricTexReceive.Focus();
             //设置光标的位置到文本尾 
@@ -61,6 +63,16 @@ namespace Client
             {
                 buttonChatSend_Click(this, e);
             }
+        }
+
+        private void buttonLog_Click(object sender, EventArgs e)
+        {
+            Log logForm = new Log();
+            string path = "./"+ chat.startIP.name + "/" + chat.aim+".txt";
+            StreamReader sr = new StreamReader(path, Encoding.BigEndianUnicode);
+            logForm.richTexLog.Text = sr.ReadToEnd();
+            sr.Close();
+            logForm.Show();
         }
     }
 }

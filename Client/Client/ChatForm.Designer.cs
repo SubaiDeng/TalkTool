@@ -34,6 +34,7 @@
             this.labMyAdr = new System.Windows.Forms.Label();
             this.labAimAdr = new System.Windows.Forms.Label();
             this.labAimNum = new System.Windows.Forms.Label();
+            this.buttonLog = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ricTexReceive
@@ -91,11 +92,22 @@
             this.labAimNum.TabIndex = 6;
             this.labAimNum.Text = "label1";
             // 
+            // buttonLog
+            // 
+            this.buttonLog.Location = new System.Drawing.Point(417, 236);
+            this.buttonLog.Name = "buttonLog";
+            this.buttonLog.Size = new System.Drawing.Size(75, 23);
+            this.buttonLog.TabIndex = 7;
+            this.buttonLog.Text = "聊天记录";
+            this.buttonLog.UseVisualStyleBackColor = true;
+            this.buttonLog.Click += new System.EventHandler(this.buttonLog_Click);
+            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 448);
+            this.Controls.Add(this.buttonLog);
             this.Controls.Add(this.labAimNum);
             this.Controls.Add(this.labAimAdr);
             this.Controls.Add(this.labMyAdr);
@@ -119,5 +131,6 @@
         private System.Windows.Forms.Label labMyAdr;
         private System.Windows.Forms.Label labAimAdr;
         public System.Windows.Forms.Label labAimNum;
+        private System.Windows.Forms.Button buttonLog;
     }
 }

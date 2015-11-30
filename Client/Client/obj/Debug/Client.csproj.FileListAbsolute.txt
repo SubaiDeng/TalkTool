@@ -10,3 +10,4 @@ E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.pdb
 E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.ListFrom.resources
 E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.ChatForm.resources
 E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.OnlineList.resources
+E:\code\C#\MiniTalk\Client\Client\obj\Debug\Client.Log.resources
